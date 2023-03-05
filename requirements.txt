@@ -1,0 +1,8 @@
+https://github.com/hyperskill/hs-test-python/archive/release.tar.gz
+Flask~=2.2.3
+pyppeteer~=1.0.2
+urllib3
+requests~=2.28.2
+flask-sqlalchemy
+
+python-dotenv~=1.0.0
