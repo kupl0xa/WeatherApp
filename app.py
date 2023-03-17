@@ -32,11 +32,25 @@ with app.app_context():
 
 
 def get_weather(city):
-    params = {'q': city, 'appid': API_KEY, 'units': 'metric'}
+    params = {'q': city,
+              'appid': API_KEY,
+              'lang': 'ru',
+              'units': 'metric'}
     response = requests.get(URL, params=params).json()
+    sunrise = response['sys']['sunrise']
+    sunset = response['sys']['sunset']
+    dt = response['dt']
+    if (dt > sunrise + 3600) and (dt < sunset - 3600):
+        time_of_day = 'day'
+    elif (dt > sunset + 3600) or (dt < sunrise - 3600):
+        time_of_day = 'night'
+    else:
+        time_of_day = 'evening-morning'
     weather = {'name': response['name'],
-               'temp': response['main']['temp'],
-               'weather': response['weather'][0]['main']}
+               'temp': round(response['main']['temp']),
+               'wind': response['wind']['speed'],
+               'weather': response['weather'][0]['description'],
+               'time_of_day': time_of_day}
     return weather
 
 
@@ -73,8 +87,9 @@ def delete(city_id):
 
 # don't change the following way to run flask:
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        arg_host, arg_port = sys.argv[1].split(':')
-        app.run(host=arg_host, port=arg_port)
-    else:
-        app.run()
+    app.run()
+    # if len(sys.argv) > 1:
+    #     arg_host, arg_port = sys.argv[1].split(':')
+    #     app.run(host=arg_host, port=arg_port)
+    # else:
+    #     app.run()

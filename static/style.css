@@ -94,12 +94,16 @@ input {
 	color: black;
 }
 
-.state {
+.state, .wind {
 	text-align: center;
 	font-size: 1.5vw;
 }
 
 .day > .state {
+	color: black;
+}
+
+.day > .wind {
 	color: black;
 }
 
