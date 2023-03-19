@@ -77,11 +77,12 @@ def add_city():
         return redirect('/')
 
 
-@app.route('/delete/<city_id>', methods=['GET', 'POST'])
+@app.route('/delete/<int:city_id>', methods=['GET', 'POST'])
 def delete(city_id):
     city = City.query.filter_by(id=city_id).first()
-    db.session.delete(city)
-    db.session.commit()
+    if city:
+        db.session.delete(city)
+        db.session.commit()
     return redirect('/')
 
 
